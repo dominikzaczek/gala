@@ -9,12 +9,13 @@ export default async function handler(req, res) {
   const build_body = {
     data: {
       owner_name: `${td.details.name} ${td.details.surname}`,
-      full_table: false,
+      full_table: td.fullTable,
       list_of_guests: td.tickets,
       stripe_paid: true,
       stripe_transaction_id: transId,
       price: td.price,
       owner_email: td.details.email,
+      table_name: td.tableName,
     },
   };
 

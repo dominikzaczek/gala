@@ -2,7 +2,7 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  const { price, details, tickets } = req.body;
+  const { price, details, tickets, fullTable, tableName } = req.body;
   console.log("PRAJSA 2", price);
   const paymentIntent = await stripe.paymentIntents.create({
     amount: price * 100,
@@ -10,7 +10,9 @@ export default async function handler(req, res) {
     automatic_payment_methods: {
       enabled: true,
     },
-    description: `${details.name} ${details.surname}, ${tickets.length} tickets `,
+    description: fullTable
+      ? `${details.name} ${details.surname}, a table: ${tableName}`
+      : `${details.name} ${details.surname}, ${tickets.length} tickets `,
   });
 
   res.send({

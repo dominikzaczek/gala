@@ -80,16 +80,57 @@ export default function CheckoutForm({ query }) {
     setIsLoading(false);
   };
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" />
-      {isLoading && "It is loading..."}
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="payment_button">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
-      </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
-    </form>
+    <div className="container info-container-no-anim">
+      <h2>Please pay for your tickets</h2>
+      <div className="row p-3">
+        <div className="col-lg-6">
+          <form id="payment-form" onSubmit={handleSubmit}>
+            <PaymentElement id="payment-element" />
+            {isLoading && "It is loading..."}
+            <button
+              disabled={isLoading || !stripe || !elements}
+              id="submit"
+              className="buttonka mt-3"
+            >
+              <span id="payment_button">
+                {isLoading ? (
+                  <div className="spinner" id="spinner"></div>
+                ) : (
+                  "Pay now"
+                )}
+              </span>
+            </button>
+            {/* Show any error or success messages */}
+            {message && <div id="payment-message">{message}</div>}
+          </form>
+        </div>
+        <div className="col-lg-6">
+          <h2>Order details</h2>
+          <p className="m-0">
+            Your name: {parsed.details.name} {parsed.details.surname}
+          </p>
+          <p className="m-0">Email: {parsed.details.email}</p>
+          <p className="m-0">
+            Address: {parsed.details.addressLine1}, {parsed.details.postCode}{" "}
+            {parsed.details.city}
+          </p>
+          <h4 className="mt-5">
+            {parsed.fullTable
+              ? `Your table ${parsed.tableName}`
+              : `Your tickets (${parsed.tickets.length})`}
+          </h4>
+          {parsed.tickets.map((ticket, key) => {
+            return (
+              <div key={key}>
+                <h5 className="m-0">{ticket.fullName}</h5>
+                <p className="m-0">Table preferences: {ticket.tableName}</p>
+                <p>Dietary requirements: {ticket.diet}</p>
+              </div>
+            );
+          })}
+          <h1 className="mt-5">Total: &pound;{parsed.price}</h1>
+        </div>
+      </div>
+    </div>
   );
 }

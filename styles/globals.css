@@ -29,7 +29,12 @@ main {
 .shadow-around {
   box-shadow: 0 0 3px #CDB18C;
 }
-
+h1, h2, h3, h4 {
+  color: #CDB18C;
+}
+h5 {
+  color: lightgray;
+}
 h1{
   color: #CDB18C;
   size: 40px;
@@ -108,11 +113,14 @@ input {
   cursor: pointer;
   transition: all;
   transition-duration: 1000ms;
+  text-decoration: none;
+  color: black;
 }
 .buttonka:hover{
   box-shadow: 0 0 9px 1px #CDB18C;
   fill-opacity: 0.6;
   border-radius: 10px;
+  color: black;
 }
 
 .largo{

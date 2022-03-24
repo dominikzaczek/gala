@@ -1,8 +1,27 @@
 import Navbar from "./navbar";
 import Footer from "./footer";
-
+import React from "react";
+import Authorise from "../../components/authorise";
 export default function Layout({ siteProps, children }) {
-  console.log(siteProps);
+  const [secured, setSecured] = React.useState(true);
+  React.useEffect(() => {
+    const authorise = async () => {
+      console.log("AUTORYZUJE");
+      const cuki = document.cookie;
+      const majka = cuki.trim().split("=");
+      const fecznij = await fetch("./api/authorise", {
+        method: "POST",
+        body: majka[0],
+      });
+      const respondka = await fecznij.json();
+      console.log("RES", respondka);
+      if (respondka.success) {
+        setSecured(true);
+      }
+    };
+    authorise();
+  });
+  if (!secured) return <Authorise />;
   return (
     <>
       <div
@@ -23,12 +42,24 @@ export default function Layout({ siteProps, children }) {
           <div className="row">
             <Navbar />
           </div>
-          <div className="row">
-            <main>{children}</main>
-          </div>
+          <div className="row">{children}</div>
         </div>
         <Footer />
       </div>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const fetchit = await fetch("http://localhost:3000/api/front-page", {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+    },
+  });
+  const content = await fetchit.json();
+  return {
+    props: {
+      content,
+    },
+  };
 }
