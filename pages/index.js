@@ -68,8 +68,8 @@ export default function Home({ content }) {
                 <h2>Our main sponsor</h2>
                 <p>
                   As the premier red carpet venue in Leicester Square this
-                  year's theme will be red carpet glamour. The event, which will
-                  take place on 6th May, will start with a champagne with
+                  year&apos;s theme will be red carpet glamour. The event, which
+                  will take place on 6th May, will start with a champagne with
                   canapes followed by a sumptuous four course dinner then
                   dancing. During the evening there will be a chance to win and
                   bid on many exciting prizes a number of which are unique.
