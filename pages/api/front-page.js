@@ -11,6 +11,8 @@ export default async function handler(req, res) {
     }
   );
   console.log("RESKA", do_it);
+  console.log("TEXTERO", await do_it.text());
+
   const ferlough = await do_it.json();
 
   res.send(ferlough.data);
