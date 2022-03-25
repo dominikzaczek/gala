@@ -8,16 +8,20 @@ const Authorise = () => {
     e.preventDefault();
     setLoading(true);
 
-    const fetchConfirmation = await fetch("./api/authorise", {
-      method: "POST",
-      body: password,
-    });
+    const fetchConfirmation = await fetch(
+      process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/authorise",
+      {
+        method: "POST",
+        body: password,
+      }
+    );
 
     if (fetchConfirmation.ok) {
       const json = await fetchConfirmation.json();
       if (json.success) setLoading(false);
       console.log("JSON", json);
       document.cookie = `jwt=${json.data.jwt}`;
+      window.location.reload();
     }
   };
 

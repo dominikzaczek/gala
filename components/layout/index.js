@@ -3,16 +3,19 @@ import Footer from "./footer";
 import React from "react";
 import Authorise from "../../components/authorise";
 export default function Layout({ siteProps, children }) {
-  const [secured, setSecured] = React.useState(true);
+  const [secured, setSecured] = React.useState(false);
   React.useEffect(() => {
     const authorise = async () => {
       console.log("AUTORYZUJE");
       const cuki = document.cookie;
       const majka = cuki.trim().split("=");
-      const fecznij = await fetch("./api/authorise", {
-        method: "POST",
-        body: majka[0],
-      });
+      const fecznij = await fetch(
+        process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/authorise/authorised",
+        {
+          method: "POST",
+          body: majka[1],
+        }
+      );
       const respondka = await fecznij.json();
       console.log("RES", respondka);
       if (respondka.success) {
@@ -50,7 +53,7 @@ export default function Layout({ siteProps, children }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(req, res) {
   const fetchit = await fetch("./api/front-page", {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
