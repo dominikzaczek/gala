@@ -10,8 +10,9 @@ export default async function handler(req, res) {
       },
     }
   );
+  console.log("RESKA", do_it);
   const ferlough = await do_it.json();
-  console.log("RESKA", ferlough);
+
   res.send(ferlough.data);
 
   res.send("Error");
