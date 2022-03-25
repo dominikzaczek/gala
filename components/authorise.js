@@ -22,6 +22,8 @@ const Authorise = () => {
       console.log("JSON", json);
       document.cookie = `jwt=${json.data.jwt}`;
       window.location.reload();
+    } else {
+      console.log("Password invalid");
     }
   };
 

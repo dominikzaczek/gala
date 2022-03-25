@@ -54,14 +54,12 @@ export default function Layout({ siteProps, children }) {
 }
 
 export async function getServerSideProps(req, res) {
-  const fetchit = await fetch(
-    process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/front-page",
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-      },
-    }
-  );
+  const fetchit = await fetch(process.env.STRAPI_URL + "/api/front-page", {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+    },
+  });
+  console.log("FECZIT", await fetchit.text());
   const content = await fetchit.json();
   return {
     props: {

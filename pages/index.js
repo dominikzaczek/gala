@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import React from "react";
 export default function Home({ content }) {
+  console.log("HOME CONTENT", content);
   return (
     <div className={styles.container}>
       <Head>
@@ -94,22 +95,28 @@ export default function Home({ content }) {
 }
 
 export async function getServerSideProps() {
+  let fetchit;
   try {
-    const fetchit = await fetch(
-      process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/front-page",
+    fetchit = await fetch(
+      process.env.STRAPI_URL + "/api/front-page?populate=*",
       {
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
         },
       }
     );
-    const content = await fetchit.json();
-    return {
-      props: {
-        content,
-      },
-    };
+    if (fetchit.ok) {
+      const content = await fetchit.json();
+      return {
+        props: {
+          content: content.data,
+        },
+      };
+    } else {
+      throw "Failed";
+    }
   } catch (e) {
+    console.log(fetchit.ok, fetchit.status, fetchit.statusText);
     console.error(e);
   }
 }
