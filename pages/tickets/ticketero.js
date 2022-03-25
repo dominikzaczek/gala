@@ -20,14 +20,14 @@ export default function Checkout() {
   console.log(parsed);
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("../api/tickets", {
+    fetch(process.env.WEBSITE_URL + "/api/tickets", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(parsed),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, []);
+  });
 
   const appearance = {
     theme: "night",
