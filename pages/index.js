@@ -94,7 +94,7 @@ export default function Home({ content }) {
 }
 
 export async function getStaticProps() {
-  const fetchit = await fetch("./api/front-page", {
+  const fetchit = await fetch(process.env.WEBSITE_URL + "/api/front-page", {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
