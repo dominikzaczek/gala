@@ -16,8 +16,7 @@ const stripePromise = loadStripe(
 export default function Checkout({ props }) {
   const [clientSecret, setClientSecret] = useState("");
   const { query } = useRouter();
-  const parsed = JSON.parse(query.q);
-  console.log(parsed);
+  const parsed = query?.q ? JSON.parse(query.q) : null;
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch(process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/tickets", {
@@ -38,7 +37,7 @@ export default function Checkout({ props }) {
   };
   return (
     <div className="info-container-no-anim">
-      {clientSecret ? (
+      {clientSecret && parsed ? (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm query={JSON.stringify(parsed)} />
         </Elements>
