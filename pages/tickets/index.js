@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Tickets = () => {
+const Tickets = ({ props }) => {
   return (
     <div className="container">
       <div className="row justify-content-center golder">

@@ -11,11 +11,15 @@ function MyApp({ Component, pageProps, returning }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   console.log("FETCHING");
-  const details = await fetch(process.env.WEBSITE_URL + "/api/hello", {
-    method: "GET",
-  });
+  console.log(`Building slug: ${context.params.slug}`);
+  const details = await fetch(
+    process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/hello",
+    {
+      method: "GET",
+    }
+  );
 
   const propsies = await details.json();
   const returning = propsies.data;

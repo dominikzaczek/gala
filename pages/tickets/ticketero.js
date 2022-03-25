@@ -13,14 +13,14 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-export default function Checkout() {
+export default function Checkout({ props }) {
   const [clientSecret, setClientSecret] = useState("");
   const { query } = useRouter();
   const parsed = JSON.parse(query.q);
   console.log(parsed);
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch(process.env.WEBSITE_URL + "/api/tickets", {
+    fetch(process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/tickets", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(parsed),

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-const TableTicket = () => {
+const TableTicket = ({ props }) => {
   const router = useRouter();
   const [singleTickets, setSingleTickets] = useState([
     {
