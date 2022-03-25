@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useRouter } from "next/router";
 
-import CheckoutForm from "./CheckoutForm";
+import CheckoutForm from "../../components/CheckoutForm";
 import "./tickets.module.css";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
@@ -27,7 +27,7 @@ export default function Checkout({ props }) {
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  });
+  }, []);
 
   const appearance = {
     theme: "night",

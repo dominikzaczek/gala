@@ -34,6 +34,6 @@ export default async function handler(req, res) {
   if (add_ticket.ok) {
     console.log("BODY", res.body);
 
-    res.redirect(process.env.WEBSITE_URL);
+    res.redirect(process.env.NEXT_PUBLIC_WEBSITE_URL);
   }
 }

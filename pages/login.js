@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import GoldenLogo from "../public/goldenLogo.png";
+
 const Authorise = () => {
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(true);
@@ -15,15 +16,12 @@ const Authorise = () => {
         body: password,
       }
     );
-
-    if (fetchConfirmation.ok) {
-      const json = await fetchConfirmation.json();
-      if (json.success) setLoading(false);
-      console.log("JSON", json);
-      document.cookie = `jwt=${json.data.jwt}`;
-      window.location.reload();
+    setLoading(false);
+    const json = await fetchConfirmation.json();
+    if (json.success) {
+      window.location.href = "/home";
     } else {
-      console.log("Password invalid");
+      return; // TODO: Error failed
     }
   };
 
@@ -102,4 +100,11 @@ const Authorise = () => {
   );
 };
 
+export async function getServerSideProps({ req }) {
+  return {
+    props: {
+      secured: false,
+    },
+  };
+}
 export default Authorise;
