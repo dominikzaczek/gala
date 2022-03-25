@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 export default async function handler(req, res) {
-  console.log("STRAPEY", process.env.STRAPI_TOKEN);
   const do_it = await fetch(
     process.env.STRAPI_URL + "/api/front-page?populate=*",
     {
@@ -10,10 +9,9 @@ export default async function handler(req, res) {
       },
     }
   );
-  console.log("RESKA", do_it);
-  console.log("TEXTERO", await do_it.text());
 
   const ferlough = await do_it.json();
+  console.log("RESKA", ferlough);
 
   res.send(ferlough.data);
 

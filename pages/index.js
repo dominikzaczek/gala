@@ -93,19 +93,23 @@ export default function Home({ content }) {
   );
 }
 
-export async function getServerSideProps({ props }) {
-  const fetchit = await fetch(
-    process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/front-page",
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+export async function getServerSideProps() {
+  try {
+    const fetchit = await fetch(
+      process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/front-page",
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        },
+      }
+    );
+    const content = await fetchit.json();
+    return {
+      props: {
+        content,
       },
-    }
-  );
-  const content = await fetchit.json();
-  return {
-    props: {
-      content,
-    },
-  };
+    };
+  } catch (e) {
+    console.error(e);
+  }
 }
