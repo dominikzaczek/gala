@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps, returning }) {
 
 export async function getStaticProps(context) {
   console.log("FETCHING");
-  const details = await fetch("http://localhost:3000/api/hello", {
+  const details = await fetch("./api/hello", {
     method: "GET",
   });
 

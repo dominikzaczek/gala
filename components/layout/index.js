@@ -51,7 +51,7 @@ export default function Layout({ siteProps, children }) {
 }
 
 export async function getStaticProps() {
-  const fetchit = await fetch("http://localhost:3000/api/front-page", {
+  const fetchit = await fetch("./api/front-page", {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },

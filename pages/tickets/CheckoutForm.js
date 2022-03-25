@@ -61,7 +61,7 @@ export default function CheckoutForm({ query }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/api/tickets/buczka?q=" + query,
+        return_url: process.env.WEBSITE_URL + "/api/tickets/buczka?q=" + query,
         receipt_email: email,
       },
     });

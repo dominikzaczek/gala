@@ -34,6 +34,6 @@ export default async function handler(req, res) {
   if (add_ticket.ok) {
     console.log("BODY", res.body);
 
-    res.redirect("http://localhost:3000");
+    res.redirect(process.env.WEBSITE_URL);
   }
 }
