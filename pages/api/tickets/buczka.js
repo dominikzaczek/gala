@@ -1,5 +1,44 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import sgMail from "@sendgrid/mail";
+async function sendEmail(transaction) {
+  try {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+      to: transaction.owner_email,
+      from: "contact@glendowerpa.uk", // Use the email address or domain you verified above
+      subject: "Your tickets to gala!",
+      templateId: "d-1cc02486c00d4a318940081142b7ac0d",
+      dynamic_template_data: {
+        subject: "Welcome to the Gala!",
+        user: {
+          name: transaction.owner_name,
+          transId: transaction.stripe_transaction_id,
+          price: transaction.price.toString(),
+          tickets: transaction.list_of_guests,
+        },
+      },
+    };
+    //ES6
+    sgMail.send(msg).then(
+      () => {
+        console.log("Email sent");
+      },
+      (error) => {
+        console.error(error);
 
+        if (error.response) {
+          console.error(error.response.body);
+        }
+      }
+    );
+    return res.json({
+      success: "true",
+    });
+  } catch (e) {
+    console.error(e);
+  }
+  return "Error";
+}
 export default async function handler(req, res) {
   if (!req.query.payment_intent) res.send("Unauthorized access");
   console.log("KUERY", req.query);
@@ -29,11 +68,10 @@ export default async function handler(req, res) {
     },
     body: JSON.stringify(build_body),
   });
-  const json = await add_ticket.json();
-  console.log("RESPONDED", json);
-  if (add_ticket.ok) {
-    console.log("BODY", res.body);
 
+  if (add_ticket.ok) {
+    const json = await add_ticket.json();
+    sendEmail(build_body.data);
     res.redirect(process.env.NEXT_PUBLIC_WEBSITE_URL);
   }
 }
