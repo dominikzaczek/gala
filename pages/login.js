@@ -80,21 +80,23 @@ const Authorise = () => {
       >
         <Image src={GoldenLogo} alt="Glendower PA logo" layout="fill" />
       </div>
-      <form onSubmit={handlePasswordSent}>
+      <form onSubmit={handlePasswordSent} className="d-flex flex-column">
         <input
           type="password"
           placeholder="Your password"
           style={{
             fontSize: "12px",
             padding: 15,
-            borderRadius: "5px",
             width: 300,
             border: 0,
+            color: "black !important",
           }}
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <button type="submit">Send</button>
+        <button type="submit" className="buttonka" style={{ marginTop: "1em" }}>
+          Send
+        </button>
       </form>
     </div>
   );

@@ -35,7 +35,7 @@ export default function Home({ content }) {
         </div>
         <div className="row  info-container-no-anim mt-3 p-0">
           <div
-            className="col-lg-12 p-0 d-flex align-items-center justify-content-center flex-column"
+            className="col-lg-12 p-0 d-flex align-items-center justify-content-center flex-column shadow"
             style={{
               minHeight: 150,
               background: `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${content.attributes.buy_the_tickets_background.data.attributes.formats.medium.url})`,
@@ -78,7 +78,14 @@ export default function Home({ content }) {
                   bid on many exciting prizes a number of which are unique.
                 </p>
               </div>
-              <div className="col-lg-6 p-0" style={{ position: "relative" }}>
+              <div
+                className="col-12 col-lg-6 p-0 info-container-no-anim"
+                style={{
+                  position: "relative",
+                  minHeight: 350,
+                  overflow: "hidden",
+                }}
+              >
                 <Image
                   src={
                     content.attributes.image_placeholder.data.attributes.formats
@@ -86,6 +93,7 @@ export default function Home({ content }) {
                   }
                   alt="Glendower"
                   layout="fill"
+                  objectFit="contain"
                 />
               </div>
             </div>

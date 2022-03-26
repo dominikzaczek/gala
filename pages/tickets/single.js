@@ -42,7 +42,7 @@ const SingleTicket = ({ props }) => {
       <div className="row justify-content-around mt-4">
         <div className="col-lg-5">
           <h2>Your details</h2>
-          <div className="container px-5 my-3">
+          <div className="container px-0 px-lg-5 my-3">
             <form id="contactForm" action="./checkoutero">
               <div className="form-floating mb-3">
                 <input
@@ -220,15 +220,19 @@ const SingleTicket = ({ props }) => {
               <div className="d-grid"></div>
             </form>
           </div>
-          <h1>&pound; {price && price}</h1>
-          <button onClick={handleSendToCheckout}>Buy the tickets</button>
+          <div className="d-flex justify-content-between">
+            <h1>&pound; {price && price}</h1>
+            <button onClick={handleSendToCheckout} className="buttonka">
+              Buy the tickets
+            </button>
+          </div>
         </div>
-        <div className="col-lg-5">
-          <h2>Tickets and details</h2>
+        <div className="col-12 col-lg-5">
+          <h2 className="mt-5">Tickets and details</h2>
           {singleTickets.length > 0 &&
             singleTickets.map((ticket, key) => {
               return (
-                <div className="container px-5 my-3" key={key}>
+                <div className="container px-0 px-lg-5 my-3" key={key}>
                   <h3 className="golder">Person {key + 1}</h3>
                   {key === 0 ? null : (
                     <span

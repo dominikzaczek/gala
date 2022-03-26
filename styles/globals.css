@@ -126,3 +126,12 @@ input {
 .largo{
   padding: 0.8em;
 }
+
+.burger{
+  fill: #CDB18C;
+  transition: all 500ms;
+}
+
+.burger:hover{
+  box-shadow: 0 0 9px 1px #CDB18C;
+}

@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function Footer() {
   return (
-    <div className="container-fluid shadow" style={styles.container}>
+    <div className="container-fluid shadow mt-4" style={styles.container}>
       <div className="container">
         <Image
           src="/gala_logo.png"

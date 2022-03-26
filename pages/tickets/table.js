@@ -92,9 +92,9 @@ const TableTicket = ({ props }) => {
       <form id="contactForm" action="./checkoutero">
         <h1>Buy a table</h1>
         <div className="row justify-content-around mt-4">
-          <div className="col-lg-4">
+          <div className="col-12 col-lg-4">
             <h2>Your details</h2>
-            <div className="container px-5 my-3">
+            <div className="container px-0 px-lg-5 my-3">
               <div className="form-floating mb-3">
                 <input
                   className="form-control form-control-sm formka"
@@ -278,11 +278,11 @@ const TableTicket = ({ props }) => {
               </button>
             </div>
           </div>
-          <div className="col-lg-7">
+          <div className="col-lg-7 mt-4 mt-lg-0">
             <h2>Name your table</h2>
-            <div className="row px-5 my-3">
+            <div className="row px-3 px-lg-5 my-3">
               <input
-                className="form-control form-control-sm"
+                className="form-control form-control"
                 onChange={(e) => {
                   setTableName(e.target.value);
                 }}
@@ -290,11 +290,11 @@ const TableTicket = ({ props }) => {
                 placeholder="Your table name"
               />
             </div>
-            <h2>List of attendees</h2>
+            <h2 className=" mt-4 mt-lg-0">List of attendees</h2>
             {singleTickets.length > 0 &&
               singleTickets.map((ticket, key) => {
                 return (
-                  <div className="container px-5 my-3" key={key}>
+                  <div className="container px-0 px-lg-5 my-3" key={key}>
                     <h4 className="golder">Person {key + 1}</h4>
                     <form id="singlePersonForm">
                       <div className="row">
