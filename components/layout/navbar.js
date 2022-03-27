@@ -9,9 +9,9 @@ export default function Navbar() {
           <Image src="/gala_logo.png" alt="Logo" width="186px" height="90px" />
         </Link>
       </div>
-      <div className="menu d-none d-lg-block">
+      {/* <div className="menu d-none d-lg-block">
         Home Auctions Tickets The venue Sponsors
-      </div>
+      </div> */}
       <Link href={process.env.NEXT_PUBLIC_WEBSITE_URL + "/tickets"} passHref>
         <div
           className="menu d-block d-lg-none d-flex"

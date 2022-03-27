@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import styles from "../styles/Home.module.css";
 import isSessionValid from "../utils/isSessionValid";
-
+import Modal from "../components/modal";
 export default function Home({ content }) {
   return (
     <div className={styles.container}>
@@ -26,6 +26,7 @@ export default function Home({ content }) {
               }
               alt="Glendower"
               layout="fill"
+              objectFit="cover"
             />
           </div>
           <div className="col-lg-4 p-4">
@@ -51,19 +52,25 @@ export default function Home({ content }) {
           <div className="col-lg-7 p-4 info-container-no-anim d-flex flex-column justify-content-end">
             <h2>Silent Auction</h2>
             <p>{content.attributes.silent_auction_description}</p>
-            <p className="golder">Start bidding</p>
+            <p className="golder">
+              <i>Soon available</i>
+            </p>
           </div>
           <div className="col-lg-4 p-4 info-container-no-anim">
             <h2>Live Auction</h2>
             <p>{content.attributes.live_auction_description}</p>
-            <p className="golder">See the items</p>
+            <p className="golder">
+              <i>Soon available</i>
+            </p>
           </div>
         </div>
         <div className="row justify-content-between mt-3">
           <div className="col-lg-4 p-4 info-container-no-anim">
             <h2>See our sponsors</h2>
             <p>{content.attributes.silent_auction_description}</p>
-            <p className="golder">See all of them</p>
+            <p className="golder">
+              <i>Soon available</i>
+            </p>
           </div>
           <div className="col-lg-7 ">
             <div className="row ">
@@ -93,7 +100,7 @@ export default function Home({ content }) {
                   }
                   alt="Glendower"
                   layout="fill"
-                  objectFit="contain"
+                  objectFit="cover"
                 />
               </div>
             </div>
