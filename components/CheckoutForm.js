@@ -124,8 +124,10 @@ export default function CheckoutForm({ query }) {
           {parsed.tickets.map((ticket, key) => {
             return (
               <div key={key}>
-                <h5 className="m-0">{ticket.fullName}</h5>
-                <p className="m-0">Table preferences: {ticket.tableName}</p>
+                <h5 className="m-0">Name: {ticket.fullName}</h5>
+                {!parsed.fullTable && (
+                  <p className="m-0">Table preferences: {ticket.tableName}</p>
+                )}
                 <p>Dietary requirements: {ticket.diet}</p>
               </div>
             );

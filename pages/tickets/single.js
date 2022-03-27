@@ -21,12 +21,14 @@ const SingleTicket = ({ props }) => {
 
   const [price, setPrice] = useState(175);
 
+  useEffect(() => {}, []);
   const handleSendToCheckout = (e) => {
     e.preventDefault();
     const order = {
       tickets: singleTickets,
       details: personalDetails,
       price,
+      fullTable: false,
     };
 
     const stringified = JSON.stringify(order);
@@ -233,15 +235,18 @@ const SingleTicket = ({ props }) => {
             singleTickets.map((ticket, key) => {
               return (
                 <div className="container px-0 px-lg-5 my-3" key={key}>
-                  <h3 className="golder">Person {key + 1}</h3>
+                  <h3 className="golder">
+                    {singleTickets[key].name
+                      ? singleTickets[key].name
+                      : `Person ${key + 1}`}
+                  </h3>
                   {key === 0 ? null : (
                     <span
                       className="golder-btn"
                       onClick={() => {
-                        const whichOne = singleTickets.indexOf(key);
-                        const spliced = singleTickets.splice(whichOne, 1);
-                        console.log(spliced);
-                        setSingleTickets(spliced);
+                        const ticketsy = singleTickets;
+                        ticketsy.splice(key, 1);
+                        setSingleTickets(ticketsy);
                         setPrice((price -= 175));
                       }}
                     >

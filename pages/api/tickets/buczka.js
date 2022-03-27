@@ -1,13 +1,16 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 import sgMail from "@sendgrid/mail";
 async function sendEmail(transaction) {
+  console.log("IS FULL?", transaction.full_table);
   try {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
       to: transaction.owner_email,
       from: "contact@glendowerpa.uk", // Use the email address or domain you verified above
       subject: "Your tickets to gala!",
-      templateId: "d-1cc02486c00d4a318940081142b7ac0d",
+      templateId: transaction.full_table
+        ? "d-a093d6dd2c1041f5a75d95b92e3b917a"
+        : "d-1cc02486c00d4a318940081142b7ac0d",
       dynamic_template_data: {
         subject: "Welcome to the Gala!",
         user: {
@@ -15,6 +18,7 @@ async function sendEmail(transaction) {
           transId: transaction.stripe_transaction_id,
           price: transaction.price.toString(),
           tickets: transaction.list_of_guests,
+          tableName: transaction.table_name,
         },
       },
     };
