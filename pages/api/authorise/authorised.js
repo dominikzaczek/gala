@@ -3,7 +3,11 @@ import qs from "querystring";
 export default async function handler(req, res) {
   console.log(req.body);
   const passka = req.body.split("=")[1];
-  const passka0 = passka.split(";").length > 1 ? passka.split(";")[0] : passka;
+  const passka0 = passka
+    ? passka.split(";").length > 1
+      ? passka.split(";")[0]
+      : passka
+    : null;
   console.log("PASSKA HERE", passka);
   if (passka0 === process.env.TRUE_SECRET_PASS) {
     return res.json({
