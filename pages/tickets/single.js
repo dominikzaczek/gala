@@ -285,7 +285,7 @@ const SingleTicket = ({ props }) => {
                         className="form-control"
                         id="tablePreference"
                         type="text"
-                        placeholder="Table preference?"
+                        placeholder="Table preference / Year?"
                         data-sb-validations="required"
                         onChange={(e) => {
                           const newIds = singleTickets.slice(); //copy the array
@@ -297,7 +297,9 @@ const SingleTicket = ({ props }) => {
                           setSingleTickets(newIds);
                         }}
                       />
-                      <label htmlFor="tablePreference">Table preference?</label>
+                      <label htmlFor="tablePreference">
+                        Table preference / Year
+                      </label>
                       <div
                         className="invalid-feedback"
                         data-sb-feedback="tablePreference:required"

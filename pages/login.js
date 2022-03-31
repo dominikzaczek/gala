@@ -1,59 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import GoldenLogo from "../public/goldenLogo.png";
+import { getProviders, signIn } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
-const Authorise = () => {
+const Authorise = ({ providers }) => {
   const [password, setPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(true);
-  const handlePasswordSent = async (e) => {
-    e.preventDefault();
-    setLoading(true);
 
-    const fetchConfirmation = await fetch(
-      process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/authorise",
-      {
-        method: "POST",
-        body: password,
-      }
-    );
-    setLoading(false);
-    const json = await fetchConfirmation.json();
-    if (json.success) {
-      window.location.href = "/home";
-    } else {
-      return; // TODO: Error failed
-    }
-  };
-
-  React.useEffect(() => {
-    setLoading(false);
-  }, []);
-  if (loading)
-    return (
-      <div
-        className="container-fluid d-flex justify-content-center align-items-center"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://res.cloudinary.com/dap7rb3ky/image/upload/v1647350369/The_Londoner_The_Residence_Drawing_Room_YP_1_de86e18393.jpg)",
-          backgroundSize: "cover",
-          height: "100vh",
-          display: "flex",
-          backgroundSize: `100vw 100vh`,
-          justifyContent: "space-between",
-          flexDirection: "column",
-          backgroundAttachment: "fixed",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div
-          className="spinner-border golder"
-          style={{ width: 200, height: 200 }}
-          role="status"
-        >
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
   return (
     <div
       className="container-fluid d-flex justify-content-center align-items-center"
@@ -80,7 +33,18 @@ const Authorise = () => {
       >
         <Image src={GoldenLogo} alt="Glendower PA logo" layout="fill" />
       </div>
-      <form onSubmit={handlePasswordSent} className="d-flex flex-column">
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button
+        onClick={() => signIn("credentials", { password })}
+        className="buttonka"
+      >
+        Sign in to view the page
+      </button>
+      {/* <form onSubmit={handlePasswordSent} className="d-flex flex-column">
         <input
           type="password"
           placeholder="Your password"
@@ -97,16 +61,24 @@ const Authorise = () => {
         <button type="submit" className="buttonka" style={{ marginTop: "1em" }}>
           Send
         </button>
-      </form>
+      </form> */}
     </div>
   );
 };
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const session = await getSession({ req });
+  const providers = await getProviders();
+
+  if (session) {
+    return {
+      redirect: { destination: "/" },
+    };
+  }
+
   return {
-    props: {
-      secured: false,
-    },
+    props: { providers },
   };
 }
 export default Authorise;

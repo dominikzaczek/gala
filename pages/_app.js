@@ -2,13 +2,20 @@ import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 import Layout from "../components/layout";
+import { SessionProvider } from "next-auth/react";
 
 function MyApp(props) {
-  const { Component, pageProps, returning } = props;
+  const {
+    Component,
+    pageProps: { session, ...pageProps },
+    returning,
+  } = props;
   return (
-    <Layout secured={pageProps.secured} siteProps={returning}>
-      <Component {...pageProps} />
-    </Layout>
+    <SessionProvider session={session}>
+      <Layout session={session}>
+        <Component {...pageProps} />
+      </Layout>
+    </SessionProvider>
   );
 }
 

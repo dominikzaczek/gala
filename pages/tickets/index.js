@@ -15,7 +15,7 @@ const Tickets = ({ props }) => {
       <div className="row justify-content-around mt-4">
         <Link href="./tickets/table" passHref>
           <div
-            className="col-lg-7 info-container d-flex align-items-end mb-4"
+            className="col-lg-7 info-container d-flex align-items-end"
             style={styles.menuContainer}
           >
             <h2>Buy a table</h2>

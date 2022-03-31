@@ -3,8 +3,8 @@ import Head from "next/head";
 import Image from "next/image";
 
 import styles from "../styles/Home.module.css";
-import isSessionValid from "../utils/isSessionValid";
-import Modal from "../components/modal";
+import { getSession } from "next-auth/react";
+
 export default function Home({ content }) {
   return (
     <div className={styles.container}>
@@ -15,7 +15,7 @@ export default function Home({ content }) {
       </Head>
 
       <div className="container p-0">
-        <div className="row  info-container-no-anim p-0">
+        <div className="row info-container-no-anim p-0">
           <div
             className="col-lg-8 p-0"
             style={{ position: "relative", minHeight: 300 }}
@@ -34,7 +34,8 @@ export default function Home({ content }) {
             <p>{content.attributes.hero_text}</p>
           </div>
         </div>
-        <div className="row  info-container-no-anim mt-3 p-0">
+
+        <div className="row info-container-no-anim mt-3 p-0">
           <div
             className="col-lg-12 p-0 d-flex align-items-center justify-content-center flex-column shadow"
             style={{
@@ -111,14 +112,17 @@ export default function Home({ content }) {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
-  if (!(await isSessionValid(req.headers.cookie))) {
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
     return {
       redirect: {
         destination: "/login",
       },
     };
   }
+
   const fetchit = await fetch(
     process.env.STRAPI_URL + "/api/front-page?populate=*",
     {

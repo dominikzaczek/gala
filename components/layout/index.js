@@ -1,8 +1,10 @@
 import Navbar from "./navbar";
 import Footer from "./footer";
 import React from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-export default function Layout({ children, secured = true }) {
+export default function Layout({ children }) {
+  const { data: session } = useSession();
   return (
     <>
       <div
@@ -20,10 +22,10 @@ export default function Layout({ children, secured = true }) {
         }}
       >
         <div className="container">
-          <div className="row">{secured && <Navbar />}</div>
+          <div className="row">{session && <Navbar />}</div>
           <div className="row">{children}</div>
         </div>
-        {secured && <Footer />}
+        {session && <Footer />}
       </div>
     </>
   );

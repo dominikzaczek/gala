@@ -3,13 +3,14 @@ import Cookies from "cookies";
 
 export default async function handler(req, res) {
   const passka = req.body;
-  const pass_salt = md5(passka + process.env.SECRET_SALT);
-  if (pass_salt === process.env.TRUE_SECRET_PASS) {
-    const cookies = new Cookies(req, res);
-    cookies.set("jwt", process.env.TRUE_SECRET_PASS);
+  console.log("PASSKO", passka);
+  if (passka.password === "GPA2022!@!") {
+    // const cookies = new Cookies(req, res);
     return res.json({
       success: true,
-      data: {},
+      data: {
+        status: "authorised",
+      },
     });
   }
   return res.status(401).json({
