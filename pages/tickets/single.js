@@ -7,6 +7,7 @@ const SingleTicket = ({ props }) => {
       fullName: "",
       tableName: "",
       diet: "",
+      teacher: false,
     },
   ]);
   const [personalDetails, setPersonalDetails] = useState({
@@ -254,6 +255,30 @@ const SingleTicket = ({ props }) => {
                     </span>
                   )}
                   <form id="singlePersonForm">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={ticket.teacher}
+                        id="flexCheckDefault"
+                        onChange={(e) => {
+                          const newIds = singleTickets.slice(); //copy the array
+                          newIds[key] = {
+                            fullName: ticket.fullName,
+                            tableName: ticket.tableName,
+                            diet: ticket.diet,
+                            teacher: !ticket.teacher,
+                          }; //execute the manipulations
+                          setSingleTickets(newIds);
+                        }}
+                      />
+                      <label
+                        className="form-check-label golder"
+                        htmlFor="flexCheckDefault"
+                      >
+                        I am buying this ticket for a teacher
+                      </label>
+                    </div>
                     <div className="form-floating mb-3">
                       <input
                         className="form-control"
@@ -268,6 +293,7 @@ const SingleTicket = ({ props }) => {
                             fullName: e.target.value,
                             tableName: ticket.tableName,
                             diet: ticket.diet,
+                            teacher: ticket.teacher,
                           }; //execute the manipulations
                           setSingleTickets(newIds);
                         }}
@@ -293,6 +319,7 @@ const SingleTicket = ({ props }) => {
                             fullName: ticket.fullName,
                             tableName: e.target.value,
                             diet: ticket.diet,
+                            teacher: ticket.teacher,
                           }; //execute the manipulations
                           setSingleTickets(newIds);
                         }}
@@ -320,6 +347,7 @@ const SingleTicket = ({ props }) => {
                             fullName: ticket.fullName,
                             tableName: ticket.tableName,
                             diet: e.target.value,
+                            teacher: ticket.teacher,
                           }; //execute the manipulations
                           setSingleTickets(newIds);
                         }}

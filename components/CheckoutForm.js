@@ -13,6 +13,7 @@ export default function CheckoutForm({ query }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const parsed = JSON.parse(query);
+  console.log("PARSED DATA", parsed);
 
   const email = parsed.details.email;
   useEffect(() => {
@@ -128,7 +129,11 @@ export default function CheckoutForm({ query }) {
                 {!parsed.fullTable && (
                   <p className="m-0">Table preferences: {ticket.tableName}</p>
                 )}
-                <p>Dietary requirements: {ticket.diet}</p>
+                {ticket.teacher && (
+                  <p className="m-0" style={{ color: "white" }}>
+                    This ticket is for a teacher
+                  </p>
+                )}
               </div>
             );
           })}
