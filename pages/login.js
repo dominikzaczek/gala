@@ -35,6 +35,7 @@ const Authorise = ({ providers }) => {
       </div>
       <input
         type="password"
+        style={{ marginBottom: 5, border: 0, fontSize: 15, padding: 10 }}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />

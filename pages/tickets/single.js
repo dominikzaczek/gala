@@ -279,89 +279,97 @@ const SingleTicket = ({ props }) => {
                         I am buying this ticket for a teacher
                       </label>
                     </div>
-                    <div className="form-floating mb-3">
-                      <input
-                        className="form-control"
-                        id="fullName"
-                        type="text"
-                        placeholder="Full name"
-                        value={ticket.fullName}
-                        data-sb-validations="required"
-                        onChange={(e) => {
-                          const newIds = singleTickets.slice(); //copy the array
-                          newIds[key] = {
-                            fullName: e.target.value,
-                            tableName: ticket.tableName,
-                            diet: ticket.diet,
-                            teacher: ticket.teacher,
-                          }; //execute the manipulations
-                          setSingleTickets(newIds);
-                        }}
-                      />
-                      <label htmlFor="fullName">Full name</label>
-                      <div
-                        className="invalid-feedback"
-                        data-sb-feedback="fullName:required"
-                      >
-                        Full name is required.
+
+                    {!ticket.teacher && (
+                      <div className="form-floating mb-3">
+                        <input
+                          className="form-control"
+                          id="fullName"
+                          type="text"
+                          placeholder="Full name"
+                          value={ticket.fullName}
+                          data-sb-validations="required"
+                          onChange={(e) => {
+                            const newIds = singleTickets.slice(); //copy the array
+                            newIds[key] = {
+                              fullName: e.target.value,
+                              tableName: ticket.tableName,
+                              diet: ticket.diet,
+                              teacher: ticket.teacher,
+                            }; //execute the manipulations
+                            setSingleTickets(newIds);
+                          }}
+                        />
+                        <label htmlFor="fullName">Full name</label>
+                        <div
+                          className="invalid-feedback"
+                          data-sb-feedback="fullName:required"
+                        >
+                          Full name is required.
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-floating mb-3">
-                      <input
-                        className="form-control"
-                        id="tablePreference"
-                        type="text"
-                        placeholder="Table preference / Year?"
-                        data-sb-validations="required"
-                        onChange={(e) => {
-                          const newIds = singleTickets.slice(); //copy the array
-                          newIds[key] = {
-                            fullName: ticket.fullName,
-                            tableName: e.target.value,
-                            diet: ticket.diet,
-                            teacher: ticket.teacher,
-                          }; //execute the manipulations
-                          setSingleTickets(newIds);
-                        }}
-                      />
-                      <label htmlFor="tablePreference">
-                        Table preference / Year
-                      </label>
-                      <div
-                        className="invalid-feedback"
-                        data-sb-feedback="tablePreference:required"
-                      >
-                        Table preference? is required.
+                    )}
+
+                    {!ticket.teacher && (
+                      <div className="form-floating mb-3">
+                        <input
+                          className="form-control"
+                          id="tablePreference"
+                          type="text"
+                          placeholder="Table preference / Year?"
+                          data-sb-validations="required"
+                          onChange={(e) => {
+                            const newIds = singleTickets.slice(); //copy the array
+                            newIds[key] = {
+                              fullName: ticket.fullName,
+                              tableName: e.target.value,
+                              diet: ticket.diet,
+                              teacher: ticket.teacher,
+                            }; //execute the manipulations
+                            setSingleTickets(newIds);
+                          }}
+                        />
+                        <label htmlFor="tablePreference">
+                          Table preference / Year
+                        </label>
+                        <div
+                          className="invalid-feedback"
+                          data-sb-feedback="tablePreference:required"
+                        >
+                          Table preference? is required.
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-floating mb-3">
-                      <input
-                        className="form-control"
-                        id="dietaryRequirements"
-                        type="text"
-                        placeholder="Dietary requirements"
-                        data-sb-validations="required"
-                        onChange={(e) => {
-                          const newIds = singleTickets.slice(); //copy the array
-                          newIds[key] = {
-                            fullName: ticket.fullName,
-                            tableName: ticket.tableName,
-                            diet: e.target.value,
-                            teacher: ticket.teacher,
-                          }; //execute the manipulations
-                          setSingleTickets(newIds);
-                        }}
-                      />
-                      <label htmlFor="dietaryRequirements">
-                        Dietary requirements
-                      </label>
-                      <div
-                        className="invalid-feedback"
-                        data-sb-feedback="dietaryRequirements:required"
-                      >
-                        Dietary requirements is required.
+                    )}
+                    {!ticket.teacher && (
+                      <div className="form-floating mb-3">
+                        <input
+                          className="form-control"
+                          id="dietaryRequirements"
+                          type="text"
+                          placeholder="Dietary requirements"
+                          data-sb-validations="required"
+                          onChange={(e) => {
+                            const newIds = singleTickets.slice(); //copy the array
+                            newIds[key] = {
+                              fullName: ticket.fullName,
+                              tableName: ticket.tableName,
+                              diet: e.target.value,
+                              teacher: ticket.teacher,
+                            }; //execute the manipulations
+                            setSingleTickets(newIds);
+                          }}
+                        />
+                        <label htmlFor="dietaryRequirements">
+                          Dietary requirements
+                        </label>
+                        <div
+                          className="invalid-feedback"
+                          data-sb-feedback="dietaryRequirements:required"
+                        >
+                          Dietary requirements is required.
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </form>
                 </div>
               );
