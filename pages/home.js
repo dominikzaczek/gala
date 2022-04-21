@@ -53,13 +53,15 @@ export default function Home({ content }) {
           <div className="col-lg-7 p-4 info-container-no-anim d-flex flex-column justify-content-end">
             <h2>Auctions</h2>
             <p>{content.attributes.silent_auction_description}</p>
-            <a
-              className="buttonka"
-              href="ww1.emma-live.com/glendowerspringgala2022"
-              style={{ width: 200 }}
-            >
-              Visit the auction page
-            </a>
+            <div>
+              <a
+                className="buttonka"
+                href="https://ww1.emma-live.com/glendowerspringgala2022"
+                style={{ width: 200 }}
+              >
+                Visit the auction page
+              </a>
+            </div>
           </div>
           <div className="col-lg-4 p-4 info-container-no-anim">
             <h2>Gala Brochure</h2>
