@@ -56,6 +56,7 @@ export default function Home({ content }) {
             <a
               className="buttonka"
               href="ww1.emma-live.com/glendowerspringgala2022"
+              style={{ width: 200 }}
             >
               Visit the auction page
             </a>
