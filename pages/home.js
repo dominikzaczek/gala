@@ -58,11 +58,14 @@ export default function Home({ content }) {
             </p>
           </div>
           <div className="col-lg-4 p-4 info-container-no-anim">
-            <h2>Live Auction</h2>
+            <h2>Gala Brochure</h2>
             <p>{content.attributes.live_auction_description}</p>
-            <p className="golder">
-              <i>Soon available</i>
-            </p>
+            <a
+              className="buttonka"
+              href="https://intelligent-margulis.77-68-115-165.plesk.page/glenower-gala-2022-brochure.pdf"
+            >
+              Download now!
+            </a>
           </div>
         </div>
         <div className="row justify-content-between mt-3">
