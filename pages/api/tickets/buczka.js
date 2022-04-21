@@ -35,9 +35,7 @@ async function sendEmail(transaction) {
         }
       }
     );
-    return res.json({
-      success: "true",
-    });
+    return true;
   } catch (e) {
     console.error(e);
   }
