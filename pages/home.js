@@ -75,12 +75,16 @@ export default function Home({ content }) {
           </div>
         </div>
         <div className="row justify-content-between mt-3">
-          <div className="col-lg-4 p-4 info-container-no-anim">
-            <h2>See our sponsors</h2>
-            <p>{content.attributes.silent_auction_description}</p>
-            <p className="golder">
-              <i>Soon available</i>
-            </p>
+          <div
+            className="col-lg-4 p-4 info-container-no-anim"
+            style={{ position: "relative" }}
+          >
+            <Image
+              src="https://res.cloudinary.com/dap7rb3ky/image/upload/v1647692253/large_TL_Main_Entrance_Exterior_DL_4_07ddcce9c6.jpg"
+              alt="Glendower"
+              layout="fill"
+              objectFit="cover"
+            />
           </div>
           <div className="col-lg-7 ">
             <div className="row ">
@@ -90,7 +94,7 @@ export default function Home({ content }) {
                   As the premier red carpet venue in Leicester Square this
                   year&apos;s theme will be red carpet glamour. The event, which
                   will take place on 6th May, will start with a champagne with
-                  canapes followed by a sumptuous four course dinner then
+                  canapes followed by a sumptuous three course dinner then
                   dancing. During the evening there will be a chance to win and
                   bid on many exciting prizes a number of which are unique.
                 </p>
