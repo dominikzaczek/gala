@@ -22,24 +22,19 @@ async function sendEmail(transaction) {
         },
       },
     };
-    //ES6
-    sgMail.send(msg).then(
-      () => {
-        console.log("Email sent");
-      },
-      (error) => {
-        console.error(error);
-
-        if (error.response) {
-          console.error(error.response.body);
-        }
+    try {
+      await sgMail.send(msg);
+      return true;
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        console.error(error.response.body);
       }
-    );
-    return true;
+    }
   } catch (e) {
     console.error(e);
   }
-  return "Error";
+  return false;
 }
 export default async function handler(req, res) {
   if (!req.query.payment_intent) res.send("Unauthorized access");
@@ -75,7 +70,7 @@ export default async function handler(req, res) {
     const json = await add_ticket.json();
     console.log("ADD TICKET OK", json);
     console.log("build_body", build_body.data);
-    sendEmail(build_body.data);
+    await sendEmail(build_body.data);
     res.redirect(process.env.NEXT_PUBLIC_WEBSITE_URL + "/tickets/confirmation");
   }
 }
