@@ -51,11 +51,14 @@ export default function Home({ content }) {
         </div>
         <div className="row justify-content-between mt-3">
           <div className="col-lg-7 p-4 info-container-no-anim d-flex flex-column justify-content-end">
-            <h2>Silent Auction</h2>
+            <h2>Auctions</h2>
             <p>{content.attributes.silent_auction_description}</p>
-            <p className="golder">
-              <i>Soon available</i>
-            </p>
+            <a
+              className="buttonka"
+              href="ww1.emma-live.com/glendowerspringgala2022"
+            >
+              Visit the auction page
+            </a>
           </div>
           <div className="col-lg-4 p-4 info-container-no-anim">
             <h2>Gala Brochure</h2>
