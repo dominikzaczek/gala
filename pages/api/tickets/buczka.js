@@ -70,7 +70,15 @@ export default async function handler(req, res) {
     const json = await add_ticket.json();
     console.log("ADD TICKET OK", json);
     console.log("build_body", build_body.data);
-    await sendEmail(build_body.data);
-    res.redirect(process.env.NEXT_PUBLIC_WEBSITE_URL + "/tickets/confirmation");
+    if (await sendEmail(build_body.data)) {
+      res.redirect(
+        process.env.NEXT_PUBLIC_WEBSITE_URL + "/tickets/confirmation"
+      );
+    } else {
+      res.redirect(
+        process.env.NEXT_PUBLIC_WEBSITE_URL +
+          "/tickets/confirmation?error=email_error"
+      );
+    }
   }
 }
