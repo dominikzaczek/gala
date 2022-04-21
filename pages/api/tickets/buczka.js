@@ -73,6 +73,8 @@ export default async function handler(req, res) {
 
   if (add_ticket.ok) {
     const json = await add_ticket.json();
+    console.log("ADD TICKET OK", json);
+    console.log("build_body", build_body.data);
     sendEmail(build_body.data);
     res.redirect(process.env.NEXT_PUBLIC_WEBSITE_URL + "/tickets/confirmation");
   }
