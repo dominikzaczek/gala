@@ -3,7 +3,8 @@ import Link from "next/link";
 import React from "react";
 import GoldenLogo from "../../public/goldenLogo.png";
 
-const Confirmation = ({ providers }) => {
+const Confirmation = ({ query }) => {
+  if(query) alert(query);
   return (
     <div
       className="container-fluid d-flex justify-content-center align-items-center"
@@ -50,12 +51,12 @@ const Confirmation = ({ providers }) => {
   );
 };
 
-// export async function getServerSideProps(context) {
-//   const { req } = context;
-//   const session = await getSession({ req });
+export async function getServerSideProps(context, req) {
+  console.log("CONTEXT", context)
+  const query = req.query
 
-//   return {
-//     props: { providers },
-//   };
-// }
+  return {
+    props: { query },
+  };
+}
 export default Confirmation;

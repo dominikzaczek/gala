@@ -47,6 +47,7 @@ const SingleTicket = ({ props }) => {
   return (
     <div className="info-container-no-anim container">
       <h1>Buy single tickets</h1>
+      <p className="golder">Attention! If you experience problems with the payments, please contact us on <b>contact@glendowerpa.uk</b> providing the number of tickets you purchased and last four digits of your card.</p>
       <div className="row justify-content-around mt-4">
         <div className="col-lg-5">
           <h2>Your details</h2>
