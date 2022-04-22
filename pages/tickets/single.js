@@ -25,6 +25,11 @@ const SingleTicket = ({ props }) => {
   useEffect(() => {}, []);
   const handleSendToCheckout = (e) => {
     e.preventDefault();
+
+    if(!personalDetails.email || !personalDetails.name || !personalDetails.surname || !personalDetails.addressLine1 || !personalDetails.city || !personalDetails.postCode){
+      alert("Please fill all the details in order to proceed");
+      return false
+    }
     const order = {
       tickets: singleTickets,
       details: personalDetails,
@@ -249,6 +254,7 @@ const SingleTicket = ({ props }) => {
                         ticketsy.splice(key, 1);
                         setSingleTickets(ticketsy);
                         setPrice((price -= 175));
+                        // setPrice((price -= 1));
                       }}
                     >
                       Remove
@@ -394,6 +400,7 @@ const SingleTicket = ({ props }) => {
                 });
                 console.log(singleTickets);
                 setPrice((price += 175));
+                // setPrice((price += 1));
               }}
               className="buttonka"
               disabled={singleTickets.length >= 9 && true}
