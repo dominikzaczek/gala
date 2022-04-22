@@ -17,6 +17,7 @@ export default function Checkout({ props }) {
   const [clientSecret, setClientSecret] = useState("");
   const { query } = useRouter();
   const parsed = query?.q ? JSON.parse(query.q) : null;
+  console.log("PARSED", parsed)
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     fetch(process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/tickets", {
@@ -24,8 +25,14 @@ export default function Checkout({ props }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(parsed),
     })
-      .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((res) => {
+        if(res.ok) return res.json()
+        throw ""
+      }
+      )
+      .then((data) => setClientSecret(data.clientSecret)).catch((e) => {
+        window.location.href = process.env.NEXT_PUBLIC_WEBSITE_URL;
+      });
   }, []);
 
   const appearance = {
