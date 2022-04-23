@@ -112,3 +112,24 @@ export default function Home({ content }) {
     </div>
   );
 }
+
+export async function getServerSideProps({ req }) {
+  const fetchit = await fetch(
+    process.env.STRAPI_URL + "/api/front-page?populate=*",
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    }
+  );
+
+  if (fetchit.ok) {
+    const content = await fetchit.json();
+    return {
+      props: {
+        content: content.data,
+      },
+    };
+  }
+  throw new Error("Could not fetch frontPage data.");
+}
