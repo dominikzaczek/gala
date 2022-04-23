@@ -311,7 +311,7 @@ const SingleTicket = () => {
                               tableName: e.target.value,
                               diet: ticket.diet,
                               teacher: ticket.teacher,
-                            }; //execute the manipulations
+                            }; //execute the  manipulations
                             setSingleTickets(newIds);
                           }}
                         />
