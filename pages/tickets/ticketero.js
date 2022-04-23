@@ -20,7 +20,7 @@ export default function Checkout({ props }) {
   if (!router.query.token) {
     return null;
   }
-
+  console.log("RUTER", router.query.token)
   const appearance = {
     theme: "night",
   };
