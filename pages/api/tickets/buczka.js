@@ -1,7 +1,9 @@
 import sgMail from "@sendgrid/mail";
 import { getSession } from "next-auth/react"
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+function atob(string) {
+  return Buffer.from(string, 'base64').toString('utf-8');
+}
 
 /**
  * Error codes:
@@ -53,7 +55,7 @@ export default async function handler(req, res) {
   if (!session) {
     return res.redirect(
       process.env.NEXT_PUBLIC_WEBSITE_URL +
-        "/login"
+        "/"
     );
   }
 

@@ -61,7 +61,7 @@ const Confirmation = ({ error }) => {
               </p>
             </>
           )}
-          <Link href="/home" passHref>
+          <Link href="/" passHref>
             <span className="buttonka">Go back to the main page</span>
           </Link>
         </div>

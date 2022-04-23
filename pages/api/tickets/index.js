@@ -1,5 +1,9 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+function btoa(string) {
+  return Buffer.from(string).toString('base64');
+}
+
 export default async function handler(req, res) {
   if (req.body) {
     const { price: priceRaw, tickets: ticketsRaw, fullTable, tableName, ...details } = req.body;
