@@ -5,6 +5,10 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
+function atob(string) {
+  return Buffer.from(string, 'base64').toString('utf-8');
+}
+
 export default function CheckoutForm({ query }) {
   const stripe = useStripe();
   const elements = useElements();

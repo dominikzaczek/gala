@@ -1,7 +1,7 @@
 import { useSession, getSession } from "next-auth/react";
 
-import Login from "./Login";
-import Home from "./Home";
+import Login from "../components/Login";
+import Home from "../components/Home";
 
 export default function Index({ content }) {
   const { data: session } = useSession();
