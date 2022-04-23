@@ -1,33 +1,42 @@
-import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-export default function Index({ authorised }) {
-  const router = useRouter();
+import { useSession, getSession } from "next-auth/react";
 
-  useEffect(() => {
-    if (authorised) {
-      router.push("./home");
-    } else {
-      router.push("./api/auth/signin");
-    }
-  });
-  return "Loading";
-}
+import Login from "./Login";
+import Home from "./Home";
 
-export async function getServerSideProps({ req, res }) {
-  const session = await getSession({ req });
+export default function Index({ content }) {
+  const { data: session } = useSession();
 
   if (session) {
+    return <Home content={content.data} />;
+  }
+
+  return <Login />;
+}
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx);
+
+  if (session) {
+    const request = await fetch(
+      process.env.STRAPI_URL + "/api/front-page?populate=*",
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        },
+      }
+    );
+
+    if (!request.ok) {
+      throw new Error('Could not retrieve content.');
+    }
+
     return {
-      redirect: {
-        destination: "/home",
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/login",
+      props: {
+        content: await request.json(),
+        session,
       },
     };
   }
+
+  return { props: {} };
 }

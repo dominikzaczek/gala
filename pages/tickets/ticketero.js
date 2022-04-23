@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useRouter } from "next/router";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
 import CheckoutForm from "../../components/CheckoutForm";
 import "./tickets.module.css";
@@ -14,43 +15,40 @@ const stripePromise = loadStripe(
 );
 
 export default function Checkout({ props }) {
-  const [clientSecret, setClientSecret] = useState("");
-  const { query } = useRouter();
-  const parsed = query?.q ? JSON.parse(query.q) : null;
-  console.log("PARSED", parsed)
-  useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    fetch(process.env.NEXT_PUBLIC_WEBSITE_URL + "/api/tickets", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(parsed),
-    })
-      .then((res) => {
-        if(res.ok) return res.json()
-        throw ""
-      }
-      )
-      .then((data) => setClientSecret(data.clientSecret)).catch((e) => {
-        window.location.href = process.env.NEXT_PUBLIC_WEBSITE_URL;
-      });
-  }, []);
+  const router = useRouter();
+
+  if (!router.query.token) {
+    return null;
+  }
 
   const appearance = {
     theme: "night",
   };
   const options = {
-    clientSecret,
+    clientSecret: router.query.token,
     appearance,
   };
+  const query = router.query.details;
   return (
     <div className="info-container-no-anim">
-      {clientSecret && parsed ? (
-        <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm query={JSON.stringify(parsed)} />
-        </Elements>
-      ) : (
-        "Loading honey!"
-      )}
+      <Elements options={options} stripe={stripePromise}>
+        <CheckoutForm query={router.query.details} />
+      </Elements>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
+  return {
+    props: {}
+  };
 }

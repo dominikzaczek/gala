@@ -1,10 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+import { signOut } from "next-auth/react";
+
 import GoldenLogo from "../../public/goldenLogo.png";
 
-const Confirmation = ({ query }) => {
-  if(query) alert(query);
+const Confirmation = ({ error }) => {
+  useEffect(() => {
+    signOut({ redirect: false });
+  }, []);
+
   return (
     <div
       className="container-fluid d-flex justify-content-center align-items-center"
@@ -36,12 +41,26 @@ const Confirmation = ({ query }) => {
           >
             <Image src={GoldenLogo} alt="Glendower PA logo" layout="fill" />
           </div>
-          <h1>Purchase confirmed</h1>
-          <p>
-            Thank you for buying your tickets. You will receive two emails - one
-            with your payment confirmation and one with the ticket. Please keep
-            both for the record.{" "}
-          </p>
+          {error ? (
+            <>
+              <h1>Something went wrong</h1>
+              <p></p>
+              <p>
+                Please contact us on <b>contact@glendowerpa.uk</b> providing the
+                following error code <i>{error}</i>, the number of tickets you
+                purchased and the last four digits of your card.
+              </p>
+            </>
+          ) : (
+            <>
+              <h1>Purchase confirmed</h1>
+              <p>
+                Thank you for buying your tickets. You will receive two emails -
+                one with your payment confirmation and one with the ticket.
+                Please keep both for the record.{" "}
+              </p>
+            </>
+          )}
           <Link href="/home" passHref>
             <span className="buttonka">Go back to the main page</span>
           </Link>
@@ -51,12 +70,10 @@ const Confirmation = ({ query }) => {
   );
 };
 
-export async function getServerSideProps(context, req) {
-  console.log("CONTEXT", context)
-  const query = req.query
-
+export async function getServerSideProps(context) {
+  const error = context.query?.error || null;
   return {
-    props: { query },
+    props: { error },
   };
 }
 export default Confirmation;

@@ -1,10 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import GoldenLogo from "../public/goldenLogo.png";
-import { getProviders, signIn } from "next-auth/react";
-import { getSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
-const Authorise = ({ providers }) => {
+const Login = () => {
   const [password, setPassword] = React.useState("");
 
   return (
@@ -45,41 +44,8 @@ const Authorise = ({ providers }) => {
       >
         Sign in to view the page
       </button>
-      {/* <form onSubmit={handlePasswordSent} className="d-flex flex-column">
-        <input
-          type="password"
-          placeholder="Your password"
-          style={{
-            fontSize: "12px",
-            padding: 15,
-            width: 300,
-            border: 0,
-            color: "black !important",
-          }}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <button type="submit" className="buttonka" style={{ marginTop: "1em" }}>
-          Send
-        </button>
-      </form> */}
     </div>
   );
 };
 
-export async function getServerSideProps(context) {
-  const { req } = context;
-  const session = await getSession({ req });
-  const providers = await getProviders();
-
-  if (session) {
-    return {
-      redirect: { destination: "/" },
-    };
-  }
-
-  return {
-    props: { providers },
-  };
-}
-export default Authorise;
+export default Login;
