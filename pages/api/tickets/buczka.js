@@ -1,5 +1,18 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 import sgMail from "@sendgrid/mail";
+import { getSession } from "next-auth/react"
+
+function atob(string) {
+  return Buffer.from(string, 'base64').toString('utf-8');
+}
+
+/**
+ * Error codes:
+ * 101 email error
+ * 102 error adding ticket to strapi
+ * 103 missing payment intent
+ * 104 missing user details
+ */
+
 async function sendEmail(transaction) {
   console.log("IS FULL?", transaction.full_table);
   try {
@@ -37,11 +50,30 @@ async function sendEmail(transaction) {
   return false;
 }
 export default async function handler(req, res) {
-  if (!req.query.payment_intent) res.send("Unauthorized access");
+  const session = await getSession({ req });
+
+  if (!session) {
+    return res.redirect(
+      process.env.NEXT_PUBLIC_WEBSITE_URL +
+        "/"
+    );
+  }
+
+  if (!req.query.payment_intent) {
+    return res.redirect(
+      process.env.NEXT_PUBLIC_WEBSITE_URL +
+        "/tickets/confirmation?error=103"
+    );
+  }
+  if (!req.query.details) {
+    return res.redirect(
+      process.env.NEXT_PUBLIC_WEBSITE_URL +
+        "/tickets/confirmation?error=104"
+    );
+  }
   console.log("KUERY", req.query);
-  const td = JSON.parse(req.query.q);
+  const td = JSON.parse(atob(req.query.details));
   const transId = req.query.payment_intent;
-  console.log(td);
   const build_body = {
     data: {
       owner_name: `${td.details.name} ${td.details.surname}`,
@@ -77,8 +109,13 @@ export default async function handler(req, res) {
     } else {
       res.redirect(
         process.env.NEXT_PUBLIC_WEBSITE_URL +
-          "/tickets/confirmation?error=email_error"
+          "/tickets/confirmation?error=101"
       );
     }
+  } else {
+    res.redirect(
+      process.env.NEXT_PUBLIC_WEBSITE_URL +
+        "/tickets/confirmation?error=102"
+    );
   }
 }

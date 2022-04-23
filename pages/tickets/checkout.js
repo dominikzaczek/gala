@@ -2,10 +2,13 @@ import React from "react";
 import { useRouter } from "next/router";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { getSession } from "next-auth/react";
 
 import CheckoutForm from "../../components/CheckoutForm";
 import "./tickets.module.css";
+
+function atob(string) {
+  return Buffer.from(string, 'base64').toString('utf-8');
+}
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -28,27 +31,12 @@ export default function Checkout({ props }) {
     clientSecret: router.query.token,
     appearance,
   };
-  const query = router.query.details;
+  const { tickets, ...rest } = JSON.parse(atob(router.query.details));
   return (
     <div className="info-container-no-anim">
       <Elements options={options} stripe={stripePromise}>
-        <CheckoutForm query={router.query.details} />
+        <CheckoutForm query={{ tickets: JSON.parse(tickets), ...rest }} />
       </Elements>
     </div>
   );
-}
-
-export async function getServerSideProps({ req }) {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-      },
-    };
-  }
-  return {
-    props: {}
-  };
 }

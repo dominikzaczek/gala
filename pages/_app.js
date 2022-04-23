@@ -8,11 +8,10 @@ function MyApp(props) {
   const {
     Component,
     pageProps: { session, ...pageProps },
-    returning,
   } = props;
   return (
     <SessionProvider session={session}>
-      <Layout session={session}>
+      <Layout showFooter={!!session} showNav={!!session}>
         <Component {...pageProps} />
       </Layout>
     </SessionProvider>

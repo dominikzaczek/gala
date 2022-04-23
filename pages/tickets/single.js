@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-const SingleTicket = ({ props }) => {
-  const router = useRouter();
+
+const SingleTicket = () => {
   const [singleTickets, setSingleTickets] = useState([
     {
       fullName: "",
@@ -24,78 +23,75 @@ const SingleTicket = ({ props }) => {
 
   useEffect(() => {}, []);
   const handleSendToCheckout = (e) => {
-    e.preventDefault();
-
-    if(!personalDetails.email || !personalDetails.name || !personalDetails.surname || !personalDetails.addressLine1 || !personalDetails.city || !personalDetails.postCode){
+    if (
+      !personalDetails.email ||
+      !personalDetails.name ||
+      !personalDetails.surname ||
+      !personalDetails.addressLine1 ||
+      !personalDetails.city ||
+      !personalDetails.postCode
+    ) {
       alert("Please fill all the details in order to proceed");
-      return false
+      e.preventDefault();
+      return false;
     }
-    const order = {
-      tickets: singleTickets,
-      details: personalDetails,
-      price,
-      fullTable: false,
-    };
-
-    const stringified = JSON.stringify(order);
-
-    const string_encoded = encodeURIComponent(stringified);
-    console.log(string_encoded);
-    const urlka = "/tickets/ticketero?q=" + string_encoded;
-    router.push(urlka);
   };
+
+  function handleChange(e) {
+    setPersonalDetails((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  }
+
   return (
-    <div className="info-container-no-anim container">
+    <form method="post" action="/api/tickets" className="info-container-no-anim container" onSubmit={handleSendToCheckout}>
       <h1>Buy single tickets</h1>
-      <p className="golder">Attention! If you experience problems with the payments, please contact us on <b>contact@glendowerpa.uk</b> providing the number of tickets you purchased and last four digits of your card.</p>
+      <p className="golder">
+        Attention! If you experience problems with the payments, please contact
+        us on <b>contact@glendowerpa.uk</b> providing the number of tickets you
+        purchased and last four digits of your card.
+      </p>
       <div className="row justify-content-around mt-4">
         <div className="col-lg-5">
           <h2>Your details</h2>
           <div className="container px-0 px-lg-5 my-3">
-            <form id="contactForm" action="./checkoutero">
               <div className="form-floating mb-3">
                 <input
                   className="form-control formka"
-                  id="emailAddress"
+                  id="email"
+                  name="email"
                   type="email"
                   placeholder="Email Address"
                   data-sb-validations="required,email"
                   value={personalDetails.email}
-                  onChange={(e) => {
-                    setPersonalDetails((prev) => ({
-                      ...prev,
-                      email: e.target.value,
-                    }));
-                  }}
+                  onChange={handleChange}
                 />
-                <label htmlFor="emailAddress">Email Address</label>
+                <label htmlFor="email">Email Address</label>
                 <div
                   className="invalid-feedback"
-                  data-sb-feedback="emailAddress:required"
+                  data-sb-feedback="email:required"
                 >
                   Email Address is required.
                 </div>
                 <div
                   className="invalid-feedback"
-                  data-sb-feedback="emailAddress:email"
+                  data-sb-feedback="email:email"
                 >
                   Email Address Email is not valid.
                 </div>
               </div>
               <div className="form-floating mb-3">
                 <input
+                  autoComplete="given-name"
                   className="form-control"
                   id="name"
+                  name="name"
                   type="text"
                   placeholder="Name"
                   data-sb-validations="required"
                   value={personalDetails.name}
-                  onChange={(e) => {
-                    setPersonalDetails((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }));
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="name">Name</label>
                 <div
@@ -107,18 +103,15 @@ const SingleTicket = ({ props }) => {
               </div>
               <div className="form-floating mb-3">
                 <input
+                  autoComplete="family-name"
                   className="form-control"
                   id="surname"
+                  name="surname"
                   type="text"
                   placeholder="Surname"
                   data-sb-validations="required"
                   value={personalDetails.surname}
-                  onChange={(e) => {
-                    setPersonalDetails((prev) => ({
-                      ...prev,
-                      surname: e.target.value,
-                    }));
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="surname">Surname</label>
                 <div
@@ -130,18 +123,15 @@ const SingleTicket = ({ props }) => {
               </div>
               <div className="form-floating mb-3">
                 <input
+                  autoComplete="address-line1"
                   className="form-control"
                   id="addressLine1"
+                  name="addressLine1"
                   type="text"
                   placeholder="Address line 1"
                   data-sb-validations="required"
                   value={personalDetails.addressLine1}
-                  onChange={(e) => {
-                    setPersonalDetails((prev) => ({
-                      ...prev,
-                      addressLine1: e.target.value,
-                    }));
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="addressLine1">Address line 1</label>
                 <div
@@ -153,18 +143,15 @@ const SingleTicket = ({ props }) => {
               </div>
               <div className="form-floating mb-3">
                 <input
+                  autoComplete="address-line2"
                   className="form-control"
                   id="addressLine2"
+                  name="addressLine2"
                   type="text"
                   placeholder="Address line 2"
                   data-sb-validations="required"
                   value={personalDetails.addressLine2}
-                  onChange={(e) => {
-                    setPersonalDetails((prev) => ({
-                      ...prev,
-                      addressLine2: e.target.value,
-                    }));
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="addressLine2">Address line 2</label>
                 <div
@@ -178,16 +165,12 @@ const SingleTicket = ({ props }) => {
                 <input
                   className="form-control"
                   id="postCode"
+                  name="postCode"
                   type="text"
                   placeholder="Post Code"
                   data-sb-validations="required"
                   value={personalDetails.postCode}
-                  onChange={(e) => {
-                    setPersonalDetails((prev) => ({
-                      ...prev,
-                      postCode: e.target.value,
-                    }));
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="postCode">Post Code</label>
                 <div
@@ -201,16 +184,12 @@ const SingleTicket = ({ props }) => {
                 <input
                   className="form-control"
                   id="city"
+                  name="city"
                   type="text"
                   placeholder="City"
                   data-sb-validations="required"
                   value={personalDetails.city}
-                  onChange={(e) => {
-                    setPersonalDetails((prev) => ({
-                      ...prev,
-                      city: e.target.value,
-                    }));
-                  }}
+                  onChange={handleChange}
                 />
                 <label htmlFor="city">City</label>
                 <div
@@ -227,11 +206,10 @@ const SingleTicket = ({ props }) => {
                 </div>
               </div>
               <div className="d-grid"></div>
-            </form>
           </div>
           <div className="d-flex justify-content-between">
             <h1>&pound; {price && price}</h1>
-            <button onClick={handleSendToCheckout} className="buttonka">
+            <button type="submit" className="buttonka">
               Buy the tickets
             </button>
           </div>
@@ -261,7 +239,6 @@ const SingleTicket = ({ props }) => {
                       Remove
                     </span>
                   )}
-                  <form id="singlePersonForm">
                     <div className="form-check">
                       <input
                         className="form-check-input"
@@ -292,6 +269,7 @@ const SingleTicket = ({ props }) => {
                         <input
                           className="form-control"
                           id="fullName"
+                          name="fullName"
                           type="text"
                           placeholder="Full name"
                           value={ticket.fullName}
@@ -322,6 +300,7 @@ const SingleTicket = ({ props }) => {
                         <input
                           className="form-control"
                           id="tablePreference"
+                          name="tablePreference"
                           type="text"
                           placeholder="Table preference / Year?"
                           data-sb-validations="required"
@@ -352,6 +331,7 @@ const SingleTicket = ({ props }) => {
                         <input
                           className="form-control"
                           id="dietaryRequirements"
+                          name="dietaryRequirements"
                           type="text"
                           placeholder="Dietary requirements"
                           data-sb-validations="required"
@@ -377,7 +357,6 @@ const SingleTicket = ({ props }) => {
                         </div>
                       </div>
                     )}
-                  </form>
                 </div>
               );
             })}
@@ -389,7 +368,8 @@ const SingleTicket = ({ props }) => {
           )}
           <div className="row justify-content-end px-5">
             <button
-              onClick={() => {
+              onClick={e => {
+                e.preventDefault();
                 const newTicket = {
                   fullName: "",
                   tableName: "",
@@ -399,7 +379,6 @@ const SingleTicket = ({ props }) => {
                   const belijka = [...prevka, newTicket];
                   return belijka;
                 });
-                console.log(singleTickets);
                 setPrice((price += 175));
                 // setPrice((price += 1));
               }}
@@ -411,7 +390,9 @@ const SingleTicket = ({ props }) => {
           </div>
         </div>
       </div>
-    </div>
+      <input name="price" type="hidden" value={price} />
+      <input name="tickets" type="hidden" value={JSON.stringify(singleTickets)} />
+    </form>
   );
 };
 
