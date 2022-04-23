@@ -1,6 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
+  console.log("BODLY", req.body)
   if (req.body) {
     const { price: priceRaw, tickets: ticketsRaw, fullTable, tableName, ...details } = req.body;
     if (!priceRaw) {
@@ -25,13 +26,12 @@ export default async function handler(req, res) {
         ? `${details.name} ${details.surname}, a table: ${tableName}`
         : `${details.name} ${details.surname}, ${tickets.length} tickets `,
     });
-
+    const stringified = JSON.stringify({ price, tickets, fullTable, tableName, details })
+    const binaryData = Buffer.from(stringified, 'utf-8')
     res.redirect(
       `${process.env.NEXT_PUBLIC_WEBSITE_URL}/tickets/ticketero?token=${
         paymentIntent.client_secret
-      }&details=${btoa(
-        JSON.stringify({ price, tickets, fullTable, tableName, details })
-      )}`
+      }&details=${binaryData}`
     );
   } else {
     return res.status(500).send();

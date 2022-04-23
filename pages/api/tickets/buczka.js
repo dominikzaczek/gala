@@ -70,7 +70,8 @@ export default async function handler(req, res) {
     );
   }
   console.log("KUERY", req.query);
-  const td = JSON.parse(atob(req.query.details));
+
+  const td = req.query.details.toString('base64')
   const transId = req.query.payment_intent;
   const build_body = {
     data: {

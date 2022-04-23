@@ -12,7 +12,7 @@ export default function CheckoutForm({ query }) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const parsed = JSON.parse(atob(query));
+  const parsed = query.toString('base64')
   const email = parsed.details.email;
    
   if (!stripe || !elements) return null;
