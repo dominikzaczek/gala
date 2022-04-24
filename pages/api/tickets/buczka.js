@@ -104,7 +104,7 @@ export default async function handler(req, res) {
     console.log("build_body", build_body.data);
     if (await sendEmail(build_body.data)) {
       res.redirect(
-        process.env.NEXT_PUBLIC_WEBSITE_URL + "/tickets/confirmation"
+        process.env.NEXT_PUBLIC_WEBSITE_URL + "/tickets/confirmation?transaction=" + transId
       );
     } else {
       res.redirect(

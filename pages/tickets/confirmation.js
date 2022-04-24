@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 
 import GoldenLogo from "../../public/goldenLogo.png";
 
-const Confirmation = ({ error }) => {
+const Confirmation = ({ error, transaction }) => {
   useEffect(() => {
     signOut({ redirect: false });
   }, []);
@@ -55,10 +55,8 @@ const Confirmation = ({ error }) => {
             <>
               <h1>Purchase confirmed</h1>
               <p>
-                Thank you for buying your tickets. You will receive two emails -
-                one with your payment confirmation and one with the ticket.
-                Please keep both for the record.{" "}
-              </p>
+                Thank you for buying your tickets. You should receive the payment confirmation email from our payments operator, Stripe. 
+                Also, please keep this reference number</p> <h4>{transaction}</h4> <p>for your records in case you don&apos;t receive the ticket confirmation email.</p>
             </>
           )}
           <Link href="/" passHref>
@@ -72,8 +70,9 @@ const Confirmation = ({ error }) => {
 
 export async function getServerSideProps(context) {
   const error = context.query?.error || null;
+  const transaction = context.query?.transaction || null
   return {
-    props: { error },
+    props: { error, transaction },
   };
 }
 export default Confirmation;
