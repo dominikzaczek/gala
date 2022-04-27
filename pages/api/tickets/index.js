@@ -12,12 +12,12 @@ export default async function handler(req, res) {
     }
     const price = parseInt(priceRaw);
     const tickets = JSON.parse(ticketsRaw);
-    const calculatedPrice = parseInt(fullTable ? 1750 : tickets.length * price);
+    const calculatedPrice = parseInt(fullTable ? 1750 : tickets.length * 175);
 
     // Check the price is correct - otherwise, there's either an issue with the clientside code or the price has been tampered with
     if (calculatedPrice !== price) {
       console.error(`Calculated price (£${calculatedPrice}) does not match price passed from client (£${price})`);
-      throw new Error('Unknown error has occurred.');
+      return res.status(500).send('Issue calculating price');
     }
     const paymentIntent = await stripe.paymentIntents.create({
       amount: price * 100,
@@ -38,6 +38,6 @@ export default async function handler(req, res) {
       )}`
     );
   } else {
-    return res.status(500).send();
+    return res.status(500).send('Invalid method. Expected POST.');
   }
 }
