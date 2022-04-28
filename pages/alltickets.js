@@ -2,7 +2,7 @@ export default function AllTickets({ content }) {
   console.log("CONTENT", content);
   return (
     <div className="info-container-no-anim">
-      {/* {content.map((tickets, key) => {
+      {content.map((tickets, key) => {
             return <div key={key}>
                 <h4>{tickets.attributes.owner_name}</h4>
                 <h5>{tickets.attributes.full_table ? `Full table bought. Table name: ${tickets.attributes.table_name}` : `Number of tickets bought: ${tickets.attributes.list_of_guests.length}`}</h5>
@@ -12,9 +12,9 @@ export default function AllTickets({ content }) {
                 })}
                 <hr />
             </div>
-        })} */}
+        })}
 
-      <h1>List of guests unavailable</h1>
+      {/* <h1>List of guests unavailable</h1> */}
     </div>
   );
 }
