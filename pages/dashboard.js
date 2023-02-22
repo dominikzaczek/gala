@@ -1,5 +1,5 @@
-export default function Dashboard() {
-  return <p>Bredzisz</p>;
+export default function Dashboard({content}) {
+  return <p>{JSON.stringify(content)}</p>;
 }
 
 export async function getServerSideProps({ req, res }) {
