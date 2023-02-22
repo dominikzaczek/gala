@@ -1,4 +1,4 @@
-// TODO: Remove the console log for live
+// TODO: Remove the console log for 2
 export default async function isSessionValid(token) {
   console.log("Checking session is valid....");
   const fecznij = await fetch(
