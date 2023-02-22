@@ -1,3 +1,4 @@
+// TODO
 export default function Dashboard({content}) {
   return <p>{JSON.stringify(content)}</p>;
 }
